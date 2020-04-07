@@ -60,15 +60,20 @@
 				
 				<h:outputLabel/>
 				<h:panelGroup>
-					<h:selectBooleanCheckbox id="pagoCheckbox" value="#{cadastroLancamentoBean.lancamento.pago}"/>
+					<h:selectBooleanCheckbox id="pagoCheckbox" value="#{cadastroLancamentoBean.lancamento.pago}"
+						immediate="true" valueChangeListener="#{cadastroLancamentoBean.lancamentoPagoModificado}" 
+						onchange="submit();"/>
 					<h:outputLabel value="Conta paga" for="pagoCheckbox"/>
 				</h:panelGroup>
 				
-				<h:outputLabel value="Data de pagamento"/>
+				<h:outputLabel value="Data de pagamento" rendered="#{cadastroLancamentoBean.lancamento.pago}"/>
 				<h:inputText size="12" value="#{cadastroLancamentoBean.lancamento.dataPagamento}" 
-						label="Data de pagamento">
+						label="Data de pagamento"
+						rendered="#{cadastroLancamentoBean.lancamento.pago}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
+					<f:validator validatorId="com.rebeca.RequeridoCondicional"/>
 					<f:validator validatorId="com.rebeca.DataFutura"/>
+					<f:attribute name="checado" value="#{cadastroLancamentoBean.lancamento.pago}"/>
 				</h:inputText>
 				
 				<h:outputLabel/>

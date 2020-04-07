@@ -3,7 +3,8 @@ package com.rebeca.financeiro.model;
 public enum TipoLancamento {	
 	
 	RECEITA("Receita"),
-	DESPESA("Despesa");
+	DESPESA("Despesa"),
+	INVESTIMENTO("Investimento");
 	
 	private String descricao;
 

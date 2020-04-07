@@ -12,9 +12,10 @@ public class GestaoPessoas {
 private static Map<Integer, Pessoa> pessoas = new HashMap<Integer, Pessoa>();
 	
 	static {
-		pessoas.put(1, new Pessoa(1, "João da Silva"));
-		pessoas.put(2, new Pessoa(2, "Lava-jato Água e Sabão Ltda"));
-		pessoas.put(3, new Pessoa(3, "Sebastião Mendes de Souza"));
+		pessoas.put(1, new Pessoa(1, "Rebeca Cruz"));
+		pessoas.put(2, new Pessoa(2, "Donavan BRQ"));
+		pessoas.put(3, new Pessoa(3, "Ivonildo BRQ"));
+		pessoas.put(4, new Pessoa(4, "Daniel BRQ"));
 	}
 	
 	public List<Pessoa> listarTodas() {

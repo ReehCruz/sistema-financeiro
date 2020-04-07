@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import com.rebeca.financeiro.model.Lancamento;
 import com.rebeca.financeiro.model.Pessoa;
@@ -28,9 +29,15 @@ public class CadastroLancamentoBean implements Serializable {
 		this.pessoas = gestaoPessoas.listarTodas();
 	}
 	
+	public void lancamentoPagoModificado(ValueChangeEvent event) {
+		this.lancamento.setPago((Boolean) event.getNewValue());
+		this.lancamento.setDataPagamento(null);
+		FacesContext.getCurrentInstance().renderResponse();
+	}
+	
 	public void cadastrar() {
 		System.out.println("Tipo: " + this.lancamento.getTipo());
-		//System.out.println("Pessoa: " + this.lancamento.getPessoa().getNome());
+		System.out.println("Pessoa: " + this.lancamento.getPessoa().getNome());
 		System.out.println("Descrição: " + this.lancamento.getDescricao());
 		System.out.println("Valor: " + this.lancamento.getValor());
 		System.out.println("Data vencimento: " + this.lancamento.getDataVencimento());
