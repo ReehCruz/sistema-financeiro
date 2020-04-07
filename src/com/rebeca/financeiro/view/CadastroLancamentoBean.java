@@ -1,21 +1,33 @@
 package com.rebeca.financeiro.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.rebeca.financeiro.model.Lancamento;
+import com.rebeca.financeiro.model.Pessoa;
 import com.rebeca.financeiro.model.TipoLancamento;
+import com.rebeca.financeiro.service.GestaoPessoas;
 
 @ManagedBean
 @ViewScoped
 public class CadastroLancamentoBean implements Serializable {
 	
+	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	private Lancamento lancamento = new Lancamento();
-
+	
+	@PostConstruct
+	public void init() {
+		GestaoPessoas gestaoPessoas = new GestaoPessoas();
+		this.pessoas = gestaoPessoas.listarTodas();
+	}
+	
 	public void cadastrar() {
 		System.out.println("Tipo: " + this.lancamento.getTipo());
 		//System.out.println("Pessoa: " + this.lancamento.getPessoa().getNome());
@@ -38,5 +50,9 @@ public class CadastroLancamentoBean implements Serializable {
 
 	public Lancamento getLancamento() {
 		return lancamento;
+	}
+	
+	public List<Pessoa> getPessoas() {
+		return pessoas;
 	}
 }

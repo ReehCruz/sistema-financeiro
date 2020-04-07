@@ -34,8 +34,11 @@
 				</h:selectOneRadio>
 				
 				<h:outputLabel value="Fornecedor"/>
-				<h:selectOneMenu>
-					<f:selectItem itemValue="Claro"/>
+				<h:selectOneMenu value="#{cadastroLancamentoBean.lancamento.pessoa}"
+						required="true" label="Pessoa">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<f:selectItems value="#{cadastroLancamentoBean.pessoas}"
+						var="pessoa" itemValue="#{pessoa}" itemLabel="#{pessoa.nome}"/>
 				</h:selectOneMenu>
 				
 				<h:outputLabel value="Descrição"/>
