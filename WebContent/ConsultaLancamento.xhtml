@@ -25,62 +25,70 @@
 			columnClasses="tipo, fornecedor, descricao, valor, vencimento, pagamento, situacao, acoes">
 
 			<h:column>
-				<h:graphicImage value="/imagens/despesa.png" />
+					<h:graphicImage value="/imagens/despesa.png" rendered="#{lancamento.tipo eq 'DESPESA'}" />
+					<h:graphicImage value="/imagens/receita.png" rendered="#{lancamento.tipo eq 'RECEITA'}" />
 			</h:column>
 
 			<h:column>
-				<f:facet name="header">
-				Fornecedor
-				</f:facet>
-
-				<h:outputText value="Claro - Internet" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">
-				Descrição
-				</f:facet>
-
-				<h:outputText value="Pagamento da Internet" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">
-				Valor
-				</f:facet>
-
-				<h:outputText value="R$ 120,00" styleClass="despesa" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">
-				Vencimento
-				</f:facet>
-
-				<h:outputText value="05/04/2020" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">
-					Pagamento
-				</f:facet>
-
-				<h:outputText value="05/04/2020" />
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">
-				Situação
-				</f:facet>
-
-				<h:outputText value="Pago" />
-			</h:column>
-
-			<h:column>
-				<h:graphicImage value="/imagens/editar.png" />
-				<h:graphicImage value="/imagens/excluir.png" />
-			</h:column>
-		</h:dataTable>
+					<f:facet name="header">
+						Fornecedor
+					</f:facet>
+					
+					<h:outputText value="#{lancamento.pessoa.nome}"/>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						Descrição
+					</f:facet>
+					
+					<h:outputText value="#{lancamento.descricao}"/>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						Valor
+					</f:facet>
+				
+					<h:outputText value="#{lancamento.valor}" styleClass="#{lancamento.tipo.toString().toLowerCase()}">
+						<f:convertNumber locale="pt_BR" currencySymbol="R$" type="currency"/>
+					</h:outputText>
+				</h:column>
+			
+				<h:column>
+					<f:facet name="header">
+						Vencimento
+					</f:facet>
+					
+					<h:outputText value="#{lancamento.dataVencimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						Pagamento
+					</f:facet>
+					
+					<h:outputText value="#{lancamento.dataPagamento}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>
+					</h:outputText>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						Situação
+					</f:facet>
+					
+					<h:outputText value="Pago" rendered="#{lancamento.pago}"/>
+					<h:outputText value="Aberto" rendered="#{not lancamento.pago}"/>
+				</h:column>
+				
+				<h:column>
+					<h:graphicImage value="/imagens/editar.png"/>
+					<h:graphicImage value="/imagens/excluir.png"/>
+				</h:column>
+			</h:dataTable>
 	</h:form>
 </h:body>
 </html>

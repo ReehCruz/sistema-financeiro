@@ -4,6 +4,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="lancamento")
 public class Lancamento implements Serializable {
 	
 	private Integer codigo;
@@ -15,19 +27,25 @@ public class Lancamento implements Serializable {
 	private boolean pago;
 	private Date dataPagamento;
 	
-	
+	@Id
+	@GeneratedValue
 	public Integer getCodigo() {
 		return codigo;
 	}
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
+	
+	@Enumerated(EnumType.STRING)
 	public TipoLancamento getTipo() {
 		return tipo;
 	}
 	public void setTipo(TipoLancamento tipo) {
 		this.tipo = tipo;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name="codigo_pessoa")
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -46,6 +64,8 @@ public class Lancamento implements Serializable {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+	
+	@Column(name="data_vencimento")
 	public Date getDataVencimento() {
 		return dataVencimento;
 	}
@@ -58,9 +78,12 @@ public class Lancamento implements Serializable {
 	public void setPago(boolean pago) {
 		this.pago = pago;
 	}
+	
+	@Column(name="data_pagamento")
 	public Date getDataPagamento() {
 		return dataPagamento;
 	}
+
 	public void setDataPagamento(Date dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
