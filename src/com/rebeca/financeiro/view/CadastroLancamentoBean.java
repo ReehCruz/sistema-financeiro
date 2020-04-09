@@ -18,6 +18,7 @@ import org.hibernate.criterion.Order;
 import com.rebeca.financeiro.model.Lancamento;
 import com.rebeca.financeiro.model.Pessoa;
 import com.rebeca.financeiro.model.TipoLancamento;
+import com.rebeca.financeiro.util.FacesUtil;
 import com.rebeca.financeiro.util.HibernateUtil;
 
 
@@ -31,13 +32,11 @@ public class CadastroLancamentoBean implements Serializable {
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
-		Session session = HibernateUtil.getSession();
+		Session session = (Session) FacesUtil.getRequestAttribute("session");
 		
 		this.pessoas = session.createCriteria(Pessoa.class)
 				.addOrder(Order.asc("nome"))
 				.list();
-		
-		session.close();
 	}
 	
 	public void lancamentoPagoModificado(ValueChangeEvent event) {
@@ -47,15 +46,9 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		Session session = HibernateUtil.getSession();
-		Transaction trx = session.beginTransaction();
-		
+		Session session = (Session) FacesUtil.getRequestAttribute("session");
 		session.merge(this.lancamento);
 		
-		trx.commit();
-		session.close();
-
-
 		this.lancamento = new Lancamento();
 		
 		String msg = "Cadastro efetuado com sucesso!";
