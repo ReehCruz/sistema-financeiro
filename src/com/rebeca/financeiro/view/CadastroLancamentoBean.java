@@ -11,32 +11,26 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Order;
-
 import com.rebeca.financeiro.model.Lancamento;
 import com.rebeca.financeiro.model.Pessoa;
 import com.rebeca.financeiro.model.TipoLancamento;
-import com.rebeca.financeiro.util.FacesUtil;
-import com.rebeca.financeiro.util.HibernateUtil;
+import com.rebeca.financeiro.repository.Lancamentos;
+import com.rebeca.financeiro.repository.Pessoas;
+import com.rebeca.financeiro.util.Repositorios;
 
 
 @ManagedBean
 @ViewScoped
 public class CadastroLancamentoBean implements Serializable {
 	
+	private Repositorios repositorios = new Repositorios();
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	private Lancamento lancamento = new Lancamento();
 	
-	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
-		Session session = (Session) FacesUtil.getRequestAttribute("session");
-		
-		this.pessoas = session.createCriteria(Pessoa.class)
-				.addOrder(Order.asc("nome"))
-				.list();
+		Pessoas pessoas = this.repositorios.getPessoas();
+		this.pessoas = pessoas.todas();
 	}
 	
 	public void lancamentoPagoModificado(ValueChangeEvent event) {
@@ -46,8 +40,8 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		Session session = (Session) FacesUtil.getRequestAttribute("session");
-		session.merge(this.lancamento);
+		Lancamentos lancamentos = this.repositorios.getLancamentos();
+		lancamentos.guardar(this.lancamento);
 		
 		this.lancamento = new Lancamento();
 		
