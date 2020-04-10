@@ -4,14 +4,16 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
+	<f:metadata>
+		<f:viewParam name="codigo" value="#{cadastroLancamentoBean.lancamento}"/>
+	</f:metadata>
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Novo lançamento</title>
-	
+	<title>#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</title>
 	<h:outputStylesheet library="css" name="sistema.css"/>
 </h:head>
 <h:body>
-	<h1>Novo lançamento</h1>
+	<h1>#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</h1>
 
 		<h:form id="frm">
 		
@@ -23,7 +25,7 @@
 				infoClass="info" />
 			
 			<h:panelGrid columns="2" styleClass="form-grid"
-					columnClasses="label, campo">
+					columnClasses="label, campo" id="panel">
 			
 				<h:outputLabel value="Tipo"/>
 				<h:selectOneRadio value="#{cadastroLancamentoBean.lancamento.tipo}"
@@ -62,7 +64,7 @@
 				<h:panelGroup>
 					<h:selectBooleanCheckbox id="pagoCheckbox" value="#{cadastroLancamentoBean.lancamento.pago}"
 						immediate="true" valueChangeListener="#{cadastroLancamentoBean.lancamentoPagoModificado}" 
-						onchange="submit();"/>
+						onchange="jsf.ajax.request(this, event, {execute: '@form', render: 'frm:panel'})"/>
 					<h:outputLabel value="Conta paga" for="pagoCheckbox"/>
 				</h:panelGroup>
 				
@@ -77,7 +79,9 @@
 				</h:inputText>
 				
 				<h:outputLabel/>
-				<h:commandButton value="Cadastrar" action="#{cadastroLancamentoBean.cadastrar}"/>
+				<h:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}">
+					<f:ajax execute="@form" render="@all"/>
+				</h:commandButton>	
 			</h:panelGrid>
 			
 		</h:form>
