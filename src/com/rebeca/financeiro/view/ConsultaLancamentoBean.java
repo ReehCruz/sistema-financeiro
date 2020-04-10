@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 
 import com.rebeca.financeiro.model.Lancamento;
 import com.rebeca.financeiro.repository.Lancamentos;
+import com.rebeca.financeiro.service.GestaoLancamentos;
+import com.rebeca.financeiro.service.RegraNegocioException;
 import com.rebeca.financeiro.util.FacesUtil;
 import com.rebeca.financeiro.util.Repositorios;
 
@@ -27,15 +29,15 @@ public class ConsultaLancamentoBean implements Serializable {
 	}
 	
 	public void excluir() {
-		if (this.lancamentoSelecionado.isPago()) {
-			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, "Lançamento já foi pago e não pode ser excluído.");
-		} else {
-			Lancamentos lancamentos = this.repositorios.getLancamentos();
-			lancamentos.remover(this.lancamentoSelecionado);
+		GestaoLancamentos gestaoLancamentos = new GestaoLancamentos(this.repositorios.getLancamentos());
+		try {
+			gestaoLancamentos.excluir(this.lancamentoSelecionado);
 			
 			this.inicializar();
 			
 			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_INFO, "Lançamento excluído com sucesso!");
+		} catch (RegraNegocioException e) {
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
 		}
 	}
 

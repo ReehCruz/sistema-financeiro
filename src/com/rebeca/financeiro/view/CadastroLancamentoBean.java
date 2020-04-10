@@ -14,8 +14,10 @@ import javax.faces.event.ValueChangeEvent;
 import com.rebeca.financeiro.model.Lancamento;
 import com.rebeca.financeiro.model.Pessoa;
 import com.rebeca.financeiro.model.TipoLancamento;
-import com.rebeca.financeiro.repository.Lancamentos;
 import com.rebeca.financeiro.repository.Pessoas;
+import com.rebeca.financeiro.service.GestaoLancamentos;
+import com.rebeca.financeiro.service.RegraNegocioException;
+import com.rebeca.financeiro.util.FacesUtil;
 import com.rebeca.financeiro.util.Repositorios;
 
 
@@ -40,14 +42,16 @@ public class CadastroLancamentoBean implements Serializable {
 	}
 	
 	public void cadastrar() {
-		Lancamentos lancamentos = this.repositorios.getLancamentos();
-		lancamentos.guardar(this.lancamento);
-		
-		this.lancamento = new Lancamento();
-		
-		String msg = "Cadastro efetuado com sucesso!";
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg));
+		GestaoLancamentos gestaoLancamentos = new GestaoLancamentos(this.repositorios.getLancamentos());
+		try {
+			gestaoLancamentos.salvar(lancamento);
+			
+			this.lancamento = new Lancamento();
+			
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_INFO, "Cadastro efetuado com sucesso!");
+		} catch (RegraNegocioException e) {
+			FacesUtil.adicionarMensagem(FacesMessage.SEVERITY_ERROR, e.getMessage());
+		}
 	}
 	
 	public TipoLancamento[] getTiposLancamentos() {
