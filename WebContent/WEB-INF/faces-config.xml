@@ -6,16 +6,19 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
     version="2.1">
     
-    <application>
-		<message-bundle>com.rebeca.financeiro.resources.Messages</message-bundle>
+   	<application>
+		<message-bundle>com.rebeca.financeiro.resources.validacao</message-bundle>
+		
+		<resource-bundle>
+			<base-name>com.rebeca.financeiro.resources.sistema</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		
+		<locale-config>
+			<default-locale>pt</default-locale>
+			<supported-locale>pt</supported-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
 	</application>
-    
-    <managed-bean>
-    	<managed-bean-name>consultaLancamentoBean</managed-bean-name>
-    	<managed-bean-class>com.rebeca.financeiro.view.ConsultaLancamentoBean</managed-bean-class>
-    	<managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
-    
-
 
 </faces-config>
