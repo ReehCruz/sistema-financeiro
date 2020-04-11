@@ -1,41 +1,35 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Lançamentos</title>
+	
+	<ui:define name="titulo">LanÃ§amentos</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:outputStylesheet library="css" name="consulta-lancamentos.css"/>
+	
+		<h1>LanÃ§amentos</h1>
 
-	<h:outputStylesheet library="css" name="sistema.css" />
-	<h:outputStylesheet library="css" name="consulta-lancamentos.css" />
-</h:head>
-<h:body>
+		<h:form id="frm">
+			<h:button value="Novo lanÃ§amento" outcome="CadastroLancamento" />
 
-	<h1>Lançamentos</h1>
-
-	<h:form id="frm">
-		<h:button value="Novo lançamento" outcome="CadastroLancamento" />
-		
-		<h:messages showDetail="false" showSummary="true" 
+			<h:messages showDetail="false" showSummary="true" 
 				styleClass="form-messages" errorClass="error"
 				infoClass="info" />
 
-		<h:dataTable var="lancamento"
-			value="#{consultaLancamentoBean.lancamentos}" width="100%"
-			styleClass="grid" headerClass="cabecalho"
-			rowClasses="cor-sim, cor-nao"
-			columnClasses="tipo, fornecedor, descricao, valor, vencimento, pagamento, situacao, acoes">
-
-			<h:column>
+			<h:dataTable var="lancamento" value="#{consultaLancamentoBean.lancamentos}"
+				width="100%" styleClass="grid" headerClass="cabecalho" rowClasses="cor-sim, cor-nao"
+				columnClasses="tipo, pessoa, descricao, valor, vencimento, pagamento, situacao, acoes">
+				
+				<h:column>
 					<h:graphicImage value="/imagens/despesa.png" rendered="#{lancamento.tipo eq 'DESPESA'}" />
 					<h:graphicImage value="/imagens/receita.png" rendered="#{lancamento.tipo eq 'RECEITA'}" />
-			</h:column>
-
-			<h:column>
+				</h:column>
+				
+				<h:column>
 					<f:facet name="header">
-						Fornecedor
+						Pessoa
 					</f:facet>
 					
 					<h:outputText value="#{lancamento.pessoa.nome}"/>
@@ -43,7 +37,7 @@
 				
 				<h:column>
 					<f:facet name="header">
-						Descrição
+						DescriÃ§Ã£o
 					</f:facet>
 					
 					<h:outputText value="#{lancamento.descricao}"/>
@@ -81,7 +75,7 @@
 				
 				<h:column>
 					<f:facet name="header">
-						Situação
+						SituaÃ§Ã£o
 					</f:facet>
 					
 					<h:outputText value="Pago" rendered="#{lancamento.pago}"/>
@@ -98,10 +92,11 @@
 						<h:graphicImage value="/imagens/excluir.png"/>
 						<f:setPropertyActionListener target="#{consultaLancamentoBean.lancamentoSelecionado}" 
 							value="#{lancamento}"/>
-							<f:ajax render="@form" />
+						<f:ajax render="@form" />
 					</h:commandLink>
 				</h:column>
 			</h:dataTable>
-	</h:form>
-</h:body>
-</html>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

@@ -1,41 +1,39 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core">
-	<f:metadata>
-		<f:viewParam name="codigo" value="#{cadastroLancamentoBean.lancamento}"/>
-	</f:metadata>
-<h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</title>
-	<h:outputStylesheet library="css" name="sistema.css"/>
-</h:head>
-<h:body>
-	<h1>#{cadastroLancamentoBean.editando ? 'Editando lançamento' : 'Novo lançamento'}</h1>
+	
+	<ui:define name="titulo">#{cadastroLancamentoBean.editando ? 'Editando lanÃ§amento' : 'Novo lanÃ§amento'}</ui:define>
+	
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="codigo" value="#{cadastroLancamentoBean.lancamento}"/>
+		</f:metadata>
+		
+		<h1>#{cadastroLancamentoBean.editando ? 'Editando lanÃ§amento' : 'Novo lanÃ§amento'}</h1>
 
 		<h:form id="frm">
 		
-			<h:button value="Novo" outcome="CadastroLancamento"/>
-			<h:button value="Consulta" outcome="ConsultaLancamento"/>
-			
+			<h:button value="Novo" outcome="CadastroLancamento" />
+			<h:button value="Consulta" outcome="ConsultaLancamento" />
+
 			<h:messages showDetail="false" showSummary="true" 
 				styleClass="form-messages" errorClass="error"
 				infoClass="info" />
-			
+
 			<h:panelGrid columns="2" styleClass="form-grid"
 					columnClasses="label, campo" id="panel">
 			
 				<h:outputLabel value="Tipo"/>
 				<h:selectOneRadio value="#{cadastroLancamentoBean.lancamento.tipo}"
-						required="true" label="Tipo do lançamento">
+						required="true" label="Tipo do lanÃ§amento">
 					<f:selectItems value="#{cadastroLancamentoBean.tiposLancamentos}"
 						var="tipoLancamento" itemLabel="#{tipoLancamento.descricao}"
 						itemValue="#{tipoLancamento}" />
 				</h:selectOneRadio>
 				
-				<h:outputLabel value="Fornecedor"/>
+				<h:outputLabel value="Pessoa"/>
 				<h:selectOneMenu value="#{cadastroLancamentoBean.lancamento.pessoa}"
 						required="true" label="Pessoa">
 					<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
@@ -43,9 +41,9 @@
 						var="pessoa" itemValue="#{pessoa}" itemLabel="#{pessoa.nome}"/>
 				</h:selectOneMenu>
 				
-				<h:outputLabel value="Descrição"/>
+				<h:outputLabel value="DescriÃ§Ã£o"/>
 				<h:inputText size="60" value="#{cadastroLancamentoBean.lancamento.descricao}" 
-					required="true" label="Descrição"/>
+					required="true" label="DescriÃ§Ã£o" />
 				
 				<h:outputLabel value="Valor"/>
 				<h:inputText size="12" value="#{cadastroLancamentoBean.lancamento.valor}" 
@@ -54,7 +52,7 @@
 					<f:validateDoubleRange minimum="0" />
 				</h:inputText>
 				
-				<h:outputLabel value="Data de vencimento"/>
+				<h:outputLabel value="Data de vencimento" />
 				<h:inputText size="12" value="#{cadastroLancamentoBean.lancamento.dataVencimento}" 
 					required="true" label="Data de vencimento">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -81,9 +79,10 @@
 				<h:outputLabel/>
 				<h:commandButton value="Salvar" action="#{cadastroLancamentoBean.salvar}">
 					<f:ajax execute="@form" render="@all"/>
-				</h:commandButton>	
+				</h:commandButton>
 			</h:panelGrid>
 			
 		</h:form>
-</h:body>
-</html>
+	</ui:define>
+	
+</ui:composition>
